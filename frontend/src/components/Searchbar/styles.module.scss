@@ -1,0 +1,140 @@
+@import "../../variables.scss";
+
+@keyframes fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+.navbar {
+  width: 100vw;
+  height: 12vh;
+  display: flex;
+  align-items: center;
+  padding: 0 3rem;
+  background: $primaryColor;
+
+  .searchBar {
+    position: relative;
+    width: 500px;
+
+    .suggestions {
+      position: absolute;
+      min-height: 50px;
+      max-height: 250px;
+      height: 50px;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: $secondaryColor;
+      transition: $animation;
+      opacity: 0;
+      pointer-events: none;
+      border-radius: 0 0 30px 30px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: -1px;
+        right: -1px;
+        height: 5px;
+        border: 1px solid $blue;
+        border-top: none;
+        border-bottom: none;
+        display: none;
+      }
+    }
+
+    .query {
+      height: 60px;
+      width: 100%;
+      border: 1px solid $secondaryColor;
+      border-radius: 30px;
+      display: flex;
+      overflow: hidden;
+      transition: $animation;
+      background: $secondaryColor;
+      z-index: 999;
+  
+      &:focus-within {
+        border: 1px solid $blue;
+        border-bottom: 1px solid $secondaryColor;
+        box-shadow: 0 0 3px $blue;
+        border-radius: 30px 30px 0 0;
+
+        .searchButton {
+          border-radius: 0 0 0 30px;
+        }
+
+        + .suggestions {
+          border: 1px solid $blue;
+          border-top: 1px solid $secondaryColor;
+          display: initial;
+          animation: fade-down $animation;
+          opacity: 1;
+          pointer-events: all;
+          
+          &::before {
+            display: initial;
+          }
+        }
+      }
+
+      &:not(:focus-within) + .suggestions {
+        animation: fade-up $animation;
+      }
+  
+      .queryContainer {
+        outline: none;
+        border: none;
+        width: 440px;
+        padding: 0 30px;
+        background: $secondaryColor;
+        color: $textColor;
+        font-weight: 400;
+        font-size: 17px;
+  
+        &::placeholder {
+          color: #ffffff33;
+        }
+      }
+  
+      .searchButton {
+        width: 60px;
+        border: none;
+        cursor: pointer;
+        background: $terciaryColor;
+        color: $white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: $animation;
+  
+        svg {
+          color: $textColor;
+          font-weight: 500;
+          font-size: 17px;
+        }
+      }
+    }
+  }
+}
